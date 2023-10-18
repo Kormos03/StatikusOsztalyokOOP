@@ -13,7 +13,6 @@ namespace StatikusOsztalyokOOP
     {
         //private string abc;
         private static Random RND = new Random();
-
         private static List<string> VEZETEKNEVEK = Feltolt("database/veznev.txt");
         private static List<string> NOI_KERNEVEK = Feltolt("database/ferfikernev.txt");
         private static List<string> FERFI_KERNEVEK = Feltolt("database/noikernev.txt");
@@ -79,10 +78,8 @@ namespace StatikusOsztalyokOOP
             {
                 case NEM.FERFI:
                     return VelFerfiKeresztNev();
-                    break; 
                 case NEM.NO:
                     return VelNoiKeresztNev();
-                    break;
                 default: return "VALAMI NEM JÓ";
             }
         }
@@ -92,11 +89,11 @@ namespace StatikusOsztalyokOOP
         }
 
         public static string VelDatum(int ev1, int ev2)
-        {
-            int ev = VelEgesz(ev1, ev2 + 1);
-                int honap = RND.Next(1, 13);
+        {   
+                int ev = VelEgesz(ev1, ev2);
+                int honap = VelEgesz(1, 12);
                 int maxNap = (honap == 2 && DateTime.IsLeapYear(ev)) ? 29 : DateTime.DaysInMonth(ev, honap); //We can write condition in a variable
-                int nap = RND.Next(1, maxNap);
+                int nap = VelEgesz(1, maxNap);
            // Console.WriteLine($"{ev}-{honap}-{nap}");
             return $"{ev}-{honap}-{nap}";
         }
@@ -106,7 +103,7 @@ namespace StatikusOsztalyokOOP
             string normalized = nev.Normalize(NormalizationForm.FormD);
             string pattern = @"[^\x20-\x7E]";
             string result = Regex.Replace(normalized, pattern, "").ToLower();
-            return $"{result.Replace(" ", "")}{Veletlen.VelEgesz(1,100)}@gmail.com";   //replace all the spaces in a string with an empty string
+            return $"{result.Replace(" ", "")}{VelEgesz(1,100)}@gmail.com";   //replace all the spaces in a string with an empty string
         }
 
         public static string velMobil()
@@ -118,12 +115,12 @@ namespace StatikusOsztalyokOOP
 
         public static string velSportag()
         {
-            return SPORTAG[RND.Next(0, SPORTAG.Count)];
+            return SPORTAG[VelEgesz(0, SPORTAG.Count)];
         }
 
         public static string velSportegyesulet()
         {
-            return $"{EGYESULET[RND.Next(0, EGYESULET.Count)]} - {velSportag()}";
+            return $"{EGYESULET[VelEgesz(0, EGYESULET.Count)]} - {velSportag()}";
         }
     }
 }
